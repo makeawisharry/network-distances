@@ -18,7 +18,7 @@ def fitting(G, plot=False, cumulative=True):
     degrees = sorted((d for n, d in G.degree()), reverse=True)
     x, y = np.unique(degrees, return_counts=True)
     if cumulative:
-        y = [sum(y[:i]) for i in range(len(y))]
+        y = [sum(y[i:]) for i in range(len(y))]
     else:
         y = [y/n for y in y]
     
