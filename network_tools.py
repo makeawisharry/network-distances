@@ -10,14 +10,17 @@ def avg_deg(G):
     degrees = sorted((d for n, d in G.degree()), reverse=True)
     return np.mean(degrees)
 
-def fitting(G, plot=False):
+def fitting(G, plot=False, cumulative=True):
     '''
     find exponent of degree distribution
     plot if desired'''
     n = G.number_of_nodes()
     degrees = sorted((d for n, d in G.degree()), reverse=True)
     x, y = np.unique(degrees, return_counts=True)
-    y = [y/n for y in y]
+    if cumulative:
+        y = [sum(y[:i]) for i in range(len(y))]
+    else:
+        y = [y/n for y in y]
     
     #define model function 
     def exp_func(x,a,b):
